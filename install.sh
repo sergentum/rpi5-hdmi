@@ -26,10 +26,8 @@ echo "Installing CEC tools..."
 sudo apt install -y cec-utils
 
 echo "Installing Moonlight (Qt)..."
-sudo apt install -y moonlight-qt
-
 curl -1sLf 'https://dl.cloudsmith.io/public/moonlight-game-streaming/moonlight-qt/setup.deb.sh' | distro=raspbian codename=$(lsb_release -cs) sudo -E bash
-sudo apt install moonlight-qt
+sudo apt install -y moonlight-qt
 
 echo "Installing Docker..."
 
@@ -41,7 +39,7 @@ sudo apt install -y ca-certificates gnupg lsb-release
 
 # add docker GPG key
 sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --batch --no-tty --dearmor -o /etc/apt/keyrings/docker.gpg
 
 # add repo
 echo \
@@ -65,18 +63,13 @@ sudo apt install -y htop iotop tmux
 
 echo "Installing and configuring the systemd service..."
 
-# 1. Копируем файл службы в системную директорию systemd
 sudo cp controller.service /etc/systemd/system/
 
-# 2. Перезагружаем демона systemd, чтобы он увидел новый файл конфигурации
 sudo systemctl daemon-reload
 
-# 3. Включаем службу для автозапуска при загрузке системы
 sudo systemctl enable controller.service
 
-# 4. Запускаем службу прямо сейчас
 sudo systemctl start controller.service
 
 echo "Checking the service status..."
-# 5. Выводим статус службы в консоль (и логи выполнения скрипта)
 sudo systemctl status controller.service

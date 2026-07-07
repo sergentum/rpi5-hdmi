@@ -1,4 +1,3 @@
-a@rpi5:~ $ cat /etc/systemd/system/rpi-input-controller.service
 [Unit]
 Description=Raspberry Pi Input + CEC + Moonlight Controller
 After=graphical.target
@@ -9,8 +8,8 @@ Type=simple
 User=a
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/a/.Xauthority
-WorkingDirectory=/home/a
-ExecStart=/usr/bin/python3 /home/a/main.py
+WorkingDirectory=/home/a/rpi5-hdmi
+ExecStart=/usr/bin/python3 /home/a/rpi5-hdmi/main.py
 Restart=always
 RestartSec=2
 
